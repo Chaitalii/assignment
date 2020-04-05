@@ -13,6 +13,7 @@ public class BrowserFactory {
 	private static BrowserFactory instance = null;
 	protected static ThreadLocal<WebDriver> webDriver = new ThreadLocal<WebDriver>();
 
+
 	public BrowserFactory() {
 
 	}
@@ -30,21 +31,14 @@ public class BrowserFactory {
 			switch (browser) {
 
 			case "chrome":
-				System.setProperty("webdriver.chrome.driver", "src/test/resources/New folder/chromedriver.exe");
+				System.setProperty("webdriver.chrome.driver", "src/test/resources/windows/chromedriver.exe");
 				ChromeOptions chOptions = new ChromeOptions();
-		
-    chOptions.addArguments("enable-automation"); 
-    chOptions.addArguments("--no-sandbox"); 
-    chOptions.addArguments("--disable-infobars"); 
-    chOptions.addArguments("--disable-dev-shm-usage"); 
-    chOptions.addArguments("--disable-browser-side-navigation"); 
-    chOptions.addArguments("--disable-gpu");
 				chOptions.addArguments("--start-maximized");
 				webDriver.set(new ChromeDriver(chOptions));
 				break;
 
 			case "firefox":
-				System.setProperty("webdriver.gecko.driver", "src/test/resources/geckodriver.exe");
+				System.setProperty("webdriver.gecko.driver", "src/test/resources/windows/geckodriver.exe");
 				FirefoxOptions options = new FirefoxOptions();
 				options.addPreference("browser.startup.homepage", "http://automationpractice.com/index.php");
 				options.setAcceptInsecureCerts(true);
@@ -58,7 +52,7 @@ public class BrowserFactory {
 		} else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
 			switch (browser) {
 			case "chrome":
-				System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver");
+				System.setProperty("webdriver.chrome.driver", "src/test/resources/mac/chromedriver");
 				ChromeOptions chOptions = new ChromeOptions();
 				chOptions.addArguments("--start-maximized");
 				webDriver.set(new ChromeDriver(chOptions));

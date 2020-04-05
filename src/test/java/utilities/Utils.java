@@ -167,18 +167,6 @@ public class Utils extends WebTest {
 		}
 	}
 
-	// public void wait_explicit_till_element_Clickable(By by) {
-	// try{
-	// WebDriverWait waitnew = new WebDriverWait(getDriver(), 20);
-	// waitnew.until(ExpectedConditions.elementToBeClickable(by));
-	// }catch(NoSuchElementException e){
-	// log.info(e);
-	// throw e;
-	// }
-	//
-	//
-	// }
-
 	public void waitAndClick(By by) {
 
 		WebDriverWait waitnew = new WebDriverWait(getDriver(), 20);
@@ -189,8 +177,15 @@ public class Utils extends WebTest {
 
 	public ArrayList<Object[]> getDataFromExcel() {
 		ArrayList<Object[]> myData = new ArrayList<Object[]>();
+		String path = null;
 		try {
-			String path = System.getProperty("user.dir") + "\\TestData.xlsx";
+			if(System.getProperty("os.name").toLowerCase().contains("win")) {
+				
+			path = System.getProperty("user.dir") + "\\TestData.xlsx";
+			}else if(System.getProperty("os.name").toLowerCase().contains("mac")) {
+				
+					path = System.getProperty("user.dir") + "/TestData.xlsx";
+			}
 			reader = new Xls_Reader(path);
 		} catch (Exception e) {
 			log.info(e.getStackTrace());
@@ -199,7 +194,6 @@ public class Utils extends WebTest {
 
 		for (int rowNum = 2; rowNum <= reader.getRowCount("Test"); rowNum++) {
 			String existingUserEmail = reader.getCellData("Test", "ExistingUserEmail", rowNum);
-			System.out.println("mail id is:: " + existingUserEmail);
 			String existingUserPassword = reader.getCellData("Test", "ExistingUserPassword", rowNum);
 			String email = reader.getCellData("Test", "Email", rowNum);
 			String pwd = reader.getCellData("Test", "RegistrationPwd", rowNum);

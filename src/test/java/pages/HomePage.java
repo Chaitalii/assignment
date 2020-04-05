@@ -39,9 +39,14 @@ public class HomePage extends BaseTest {
 
 
 	public String retrieveUserNameAfterSignIn() {
+		try{
 		String accountName = util.get_Element_Text(account);
 		log.info("Logged in user is ::" + accountName);
 		return accountName;
+		}catch(Exception e){
+			log.error("Error occured while retrieving username"+ e.toString());
+			return e.toString();
+		}
 	}
 
 	public void verifyMyAccountPageIsDisplayed() {
