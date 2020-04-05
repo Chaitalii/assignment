@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="3" guice-stage="DEVELOPMENT" name="Failed suite [Suite]" parallel="methods">
+  <listeners>
+    <listener class-name="utilities.ExtentReports.TestListener"/>
+  </listeners>
+  <test name="Test(failed)" parallel="methods">
+    <parameter name="browser" value="firefox"/>
+    <classes>
+      <class name="com.hellofresh.challenge.WebTest">
+        <methods>
+          <include name="logInTest" invocation-numbers="0"/>
+          <include name="setUp"/>
+          <include name="disableFreeMaker"/>
+          <include name="checkoutTest" invocation-numbers="0"/>
+          <include name="terminateThreadElement"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- com.hellofresh.challenge.WebTest -->
+    </classes>
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [Suite] -->
