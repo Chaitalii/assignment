@@ -6,7 +6,7 @@
        
     </listeners>
   <test name="Test">
-  <parameter name="browser" value="firefox"/>
+  <parameter name="browser" value="chrome"/>
     <classes>
       <class name="com.hellofresh.challenge.WebTest"/>
      </classes>
