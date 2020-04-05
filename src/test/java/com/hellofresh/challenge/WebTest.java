@@ -155,10 +155,10 @@ public class WebTest extends BaseTest {
 		
 		login = new LoginPage();
 		home = new HomePage();
-		String actualFullName = null;
+//		String actualFullName = null;
 		String heading = login.login(exist_Email, exist_Pwd, logger);
 		/*
-		 *****  The assertion here is to verify if teh heading is dispalyed as expected.
+		 *****  The assertion here is to verify if the heading is dispalyed as expected.
 		 *The heading should be dispalyed as "MY ACCOUNT" */
 		try {
 			assertEquals(heading, "MY ACCOUNT", "Heading is not as expected");
@@ -171,10 +171,10 @@ public class WebTest extends BaseTest {
 		 * This assertion is to verify if the logged in user's name is dispalyed as mentioned in the data source(TestData.xlsx)
 		 */
 		try {
-			actualFullName = home.verifyAccountName(fName);
+			String actualFullName = home.verifyAccountName(fName);
 			assertEquals(actualFullName, fName);
 		} catch (AssertionError e) {
-			log.info("Expected account name is ::" + fName + " and  displayed account name  is ::" + actualFullName);
+			log.info("Expected account name is and actual account name did not match");
 			log.info(e);
 			logger.log(LogStatus.FAIL, e.toString());
 			throw e;

@@ -54,7 +54,7 @@ public class SignInPage extends BrowserFactory {
 		
 		util.click(submitCreate);
 		util.waitForPageLoad();
-		logger.log(LogStatus.PASS,  "Registration is done");
+//		logger.log(LogStatus.PASS,  "Registration is done");
 		logger.log(LogStatus.PASS,  "Creating account(Fill up details)");
 		try{
 		
@@ -62,8 +62,9 @@ public class SignInPage extends BrowserFactory {
 		try{
 			util.waitAndClick(female);
 		}catch(Exception e){
-			
-			util.waitAndClick(gender);
+//			Thread.sleep(5000);
+			logger.log(LogStatus.INFO,  "Female catch block");
+//			util.waitAndClick(female);
 		}
 		util.enterText(firstName, fName);
 		util.enterText(LastName, LName);

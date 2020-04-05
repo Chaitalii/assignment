@@ -26,7 +26,7 @@ public class LoginPage extends BaseTest {
 
 	
 	
-	public String login(String existingUserEmail, String existingUserPassword, ExtentTest logger) {
+	public String login(String existingUserEmail, String existingUserPassword, ExtentTest logger) throws Exception {
 	
 		util= new Utils();
 		util.waitForPageLoad();
@@ -42,7 +42,12 @@ public class LoginPage extends BaseTest {
 		log.info("Entering mail id as ::"+existingUserEmail);
 		util.enterText(email, existingUserEmail);
 		logger.log(LogStatus.PASS,  "Entered email id");;
-		util.wait_explicit_till_element_Displayed( password);
+		util.wait_explicit_till_element_Displayed(password);
+		if(existingUserPassword==null){
+			log.info("The password seems to be blank.");
+			Thread.sleep(3000);
+			
+		}
 		log.info("Entering pwd as ::"+existingUserPassword);
 		logger.log(LogStatus.PASS,  "Entering password");
 		util.enterText(password, existingUserPassword);

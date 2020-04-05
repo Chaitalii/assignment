@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="3" name="Suite" parallel="methods" >
+ <listeners>
+        <listener class-name="utilities.ExtentReports.TestListener"/>
+       
+    </listeners>
+  <test name="Test">
+  <parameter name="browser" value="chrome"/>
+    <classes>
+      <class name="com.hellofresh.challenge.WebTest"/>
+     </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
+
