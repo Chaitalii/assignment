@@ -33,7 +33,7 @@ public class SignInPage extends BrowserFactory {
 	By submitAccount = By.id("submitAccount");
 	By heading = By.cssSelector("h1");
 	String timestamp = String.valueOf(new Date().getTime());
-	
+	By female= By.xpath("//input[contains(@id, 'gender2')]");
 	
 	
 	Utils util;
@@ -57,10 +57,17 @@ public class SignInPage extends BrowserFactory {
 		logger.log(LogStatus.PASS,  "Registration is done");
 		logger.log(LogStatus.PASS,  "Creating account(Fill up details)");
 		try{
-		util.waitAndClick(gender);
+		
 		util.wait_explicit_till_element_Displayed(firstName);
+		try{
+			util.waitAndClick(female);
+		}catch(Exception e){
+			
+			util.waitAndClick(gender);
+		}
 		util.enterText(firstName, fName);
 		util.enterText(LastName, LName);
+		util.enterText(password, pwd);
 		util.selectByValue(days, "1");
 		util.selectByValue(months, "1");
 		util.selectByValue(years, "2000");
@@ -70,19 +77,21 @@ public class SignInPage extends BrowserFactory {
 		util.scrollToView(postcode);
 		util.enterText(city, City);
 		util.selectByVisibleText(state, "Colorado");
-		util.sendText(postcode, post);
+		util.enterText(postcode, post);
 		util.enterText(other,ot);
 		util.enterText(phone, ph);
 		util.enterText(phone_Mobile, mob);
 		util.enterText(alias, al);
-		util.enterText(password, pwd);
+//		Thread.sleep(5000);
 		util.click(submitAccount);
 		util.waitForPageLoad();
 		util.wait_explicit_till_element_Displayed(heading);
+		return util.get_Element_Text(heading).toString();
 	}catch(Exception e){
 		e.printStackTrace();
+		throw e;
 	}
-		 return util.get_Element_Text(heading).toString();
+		 
 
 	}
 

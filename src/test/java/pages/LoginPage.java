@@ -53,11 +53,11 @@ public class LoginPage extends BaseTest {
 		log.info("Clicked submit button");
 		util.wait_explicit_till_element_Displayed(heading);
 		util.waitForPageLoad();
-		String h=util.get_Element_Text(heading).toString();
+//		String h=util.get_Element_Text(heading).toString();
 		return util.get_Element_Text(heading).toString();
 		}catch(Exception e){
 			e.printStackTrace();
-			return null;
+			throw e;
 		}
 
 	}

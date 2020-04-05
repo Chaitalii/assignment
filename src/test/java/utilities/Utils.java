@@ -28,6 +28,8 @@ public class Utils extends WebTest {
 
 	static Xls_Reader reader;
 
+
+
 	public void verifyTitle(String title) {
 		boolean isTitleCorrectlyDisplayed = true;
 		if (getDriver().getCurrentUrl().contains(title)) {
@@ -86,7 +88,6 @@ public class Utils extends WebTest {
 	}
 
 	public void wait_explicit_till_element_Displayed(WebDriver driver, By by) {
-
 		WebDriverWait waitnew = new WebDriverWait(driver, 20);
 		waitnew.until(ExpectedConditions.visibilityOfElementLocated(by));
 
@@ -102,20 +103,24 @@ public class Utils extends WebTest {
 	}
 
 	// *******************************************************//
-	public void sendText(By by, String text) {
-
-		WebElement objInput = getDriver().findElement(by);
-		objInput.sendKeys(text);
-
-	}
+//	public void sendText(By by, String text) {
+//		WebElement objInput = getDriver().findElement(by);
+//		objInput.sendKeys(text);
+//
+//	}
 
 	public void wait_explicit_till_element_Clickable(WebElement objElement) {
-
 		WebDriverWait waitnew = new WebDriverWait(getDriver(), 20);
 		waitnew.until(ExpectedConditions.elementToBeClickable(objElement));
 
 	}
 
+	public void wait_explicit_till_element_Clickable(By by) {
+		WebDriverWait waitnew = new WebDriverWait(getDriver(), 20);
+		waitnew.until(ExpectedConditions.elementToBeClickable(getDriver().findElement(by)));
+
+	}
+	
 	public void selectByValue(By by, String value) {
 		Select select = new Select(getDriver().findElement(by));
 		select.selectByValue(value);
@@ -123,7 +128,6 @@ public class Utils extends WebTest {
 	}
 
 	public void selectByVisibleText(By by, String text) {
-
 		Select select = new Select(getDriver().findElement(by));
 		select.selectByVisibleText(text);
 	}
@@ -134,9 +138,8 @@ public class Utils extends WebTest {
 	}
 
 	public void wait_explicit_till_element_Displayed(By by) {
-
 		WebDriverWait waitnew = new WebDriverWait(getDriver(), 20);
-		waitnew.until(ExpectedConditions.visibilityOfElementLocated(by));
+				waitnew.until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
 
 	public void click(By by) {
@@ -150,22 +153,27 @@ public class Utils extends WebTest {
 	}
 
 	public void enterText(By by, String text) {
-
+		click(by);
+		clearTextBox(by);
 		WebElement objInput = getDriver().findElement(by);
 		objInput.sendKeys(text);
-		getDriver().manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+		getDriver().manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 
 	}
-
-	public void verifyTitleAfterLogin(String actual, String Expected) {
-		try {
-			Assert.assertEquals(Expected, actual);
-			log.trace("Title is as expected");
-		} catch (AssertionError e) {
-			log.trace("Title is Not as expected");
-			log.trace(e.getStackTrace());
-		}
+	
+	public void clearTextBox(By by){
+		getDriver().findElement(by).clear();
 	}
+
+//	public void verifyTitleAfterLogin(String actual, String Expected) {
+//		try {
+//			Assert.assertEquals(Expected, actual);
+//			log.trace("Title is as expected");
+//		} catch (AssertionError e) {
+//			log.trace("Title is Not as expected");
+//			log.trace(e.getStackTrace());
+//		}
+//	}
 
 	public void waitAndClick(By by) {
 
@@ -179,12 +187,12 @@ public class Utils extends WebTest {
 		ArrayList<Object[]> myData = new ArrayList<Object[]>();
 		String path = null;
 		try {
-			if(System.getProperty("os.name").toLowerCase().contains("win")) {
-				
-			path = System.getProperty("user.dir") + "\\TestData.xlsx";
-			}else if(System.getProperty("os.name").toLowerCase().contains("mac")) {
-				
-					path = System.getProperty("user.dir") + "/TestData.xlsx";
+			if (System.getProperty("os.name").toLowerCase().contains("win")) {
+
+				path = System.getProperty("user.dir") + "\\TestData.xlsx";
+			} else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+
+				path = System.getProperty("user.dir") + "/TestData.xlsx";
 			}
 			reader = new Xls_Reader(path);
 		} catch (Exception e) {
@@ -227,4 +235,11 @@ public class Utils extends WebTest {
 				new File(System.getProperty("user.dir") + "/screenshots/" + methodName + ".png"));
 
 	}
+	
+	public void wait_explicit_till_element_invisible(By by) {
+		WebDriverWait waitnew = new WebDriverWait(getDriver(), 20);
+		waitnew.until(ExpectedConditions.invisibilityOf(getDriver().findElement(by)));
+
+	}
+
 }

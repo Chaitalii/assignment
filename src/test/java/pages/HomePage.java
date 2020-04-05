@@ -45,7 +45,7 @@ public class HomePage extends BaseTest {
 		return accountName;
 		}catch(Exception e){
 			log.error("Error occured while retrieving username"+ e.toString());
-			return e.toString();
+			throw e;
 		}
 	}
 
@@ -71,11 +71,13 @@ public class HomePage extends BaseTest {
 	}
 
 	public boolean verifyWelcomeText() {
-		
 		boolean result=util.verify_Element_Text(accountInfo, "Welcome to yourr account.");
 		return result;
 	}
 
+	public String getWelcomeText(){
+		return util.get_Element_Text(accountInfo).trim();
+	}
 //	public void verifyUrlAfterLogin() {
 //		try {
 //			assertTrue(getDriver().getCurrentUrl().contains("controller=my-account"));
@@ -117,16 +119,20 @@ public class HomePage extends BaseTest {
 
 	}
 
-	public void addToCart() {
+	public void addToCart() throws InterruptedException {
 		try {
 			try{
 			log.info("Clicking on Add To Cart button");
 			util.waitAndClick(submit);
+			util.waitForPageLoad();
 		} catch (Exception e) {
 			if (util.isElementDispalyed(closeButton)) {
 				util.click(closeButton);
 				log.info("Close button is displayed");
+				util.waitForPageLoad();
+				Thread.sleep(3000);
 				util.waitAndClick(submit);
+				
 			}
 		}
 	}catch(TimeoutException e){
