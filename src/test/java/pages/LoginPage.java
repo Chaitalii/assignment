@@ -1,18 +1,16 @@
 package pages;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 import org.apache.log4j.Logger;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import com.hellofresh.challenge.BaseTest;
-import com.hellofresh.challenge.WebTest;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
-
 import utilities.Utils;
+
+/*
+ * This class has webelements and operations from Login page
+ */
 
 public class LoginPage extends BaseTest {
 
@@ -45,9 +43,9 @@ public class LoginPage extends BaseTest {
 		util.wait_explicit_till_element_Displayed(password);
 		if(existingUserPassword==null){
 			log.info("The password seems to be blank.");
-			Thread.sleep(3000);
-			
+//			Thread.sleep(3000);
 		}
+		
 		log.info("Entering pwd as ::"+existingUserPassword);
 		logger.log(LogStatus.PASS,  "Entering password");
 		util.enterText(password, existingUserPassword);
@@ -58,10 +56,10 @@ public class LoginPage extends BaseTest {
 		log.info("Clicked submit button");
 		util.wait_explicit_till_element_Displayed(heading);
 		util.waitForPageLoad();
-//		String h=util.get_Element_Text(heading).toString();
 		return util.get_Element_Text(heading).toString();
 		}catch(Exception e){
-			e.printStackTrace();
+			log.error(e.toString());
+			logger.log(LogStatus.FAIL,  e.toString());
 			throw e;
 		}
 

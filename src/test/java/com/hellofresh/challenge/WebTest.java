@@ -1,27 +1,19 @@
 package com.hellofresh.challenge;
 
 import static org.testng.Assert.assertEquals;
-
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.apache.log4j.Logger;
 //import org.apache.logging.log4j.LogManager;
 //import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
-
 import pages.CheckoutPage;
 import pages.HomePage;
 import pages.LoginPage;
 import pages.OrderConfirmationPage;
 import pages.SignInPage;
-import utilities.Utils;
 import utilities.ExtentReports.ExtentTestManager;
 
 /*
@@ -37,38 +29,31 @@ public class WebTest extends BaseTest {
 	OrderConfirmationPage order;
 	CheckoutPage checkOut;
 
-	@DataProvider
-	public Iterator<Object[]> getTestData() {
-		Utils util = new Utils();
-		ArrayList<Object[]> testData = util.getDataFromExcel();
-		return testData.iterator();
-	}
-
 	/*
-	 * This test case is for verifying the signin process for a new user.
-	 * The data required for creating new user is passed externally from excel file.
-	 * Execution logs can be found in application.log file and the report is placed in ExtentReports folder.
+	 * This test case is for verifying the signin process for a new user. The
+	 * data required for creating new user is passed externally from excel file.
+	 * Execution logs can be found in application.log file and the report is
+	 * placed in ExtentReports folder.
 	 * 
 	 */
-	 @Test(dataProvider="getTestData",invocationCount = 20)
-	public void signInTest(Method method, String exist_Email, String exist_Pwd, String email, String pwd, String name,
-			String sName, String fName, String comp, String addr1, String addr2, String City, String post, String oth,
-			String ph, String mob, String alias) throws Exception {
+
+	@Test()
+	public void signInTest(Method method) throws Exception {
 		ExtentTest logger = ExtentTestManager.startTest(method.getName(), "Create new User");
 		signIn = new SignInPage();
 		home = new HomePage();
 		log.info("Starting SignIn Test");
 		logger.log(LogStatus.INFO, "Starting SignIn Test");
-		String heading = signIn.createAccount(email, pwd, name, sName, comp, addr1, addr2, City, post, oth, ph, mob,
-				alias, logger);
+		String heading = signIn.createAccount(data.get("email"), data.get("pwd"), data.get("name"), data.get("sName"), data.get("comp"), data.get("addr1"), 
+				data.get("addr2"), data.get("City"), data.get("post"), data.get("post"), data.get("post"), data.get("mob"), data.get("alias"), logger);
 		String loggedInUserName = home.retrieveUserNameAfterSignIn();
-		String newAccountName = name + " " + sName;
-		
-		
+		String newAccountName = data.get("name") + " " + data.get("sName");
+
 		/*
-		 *****  The assertion here is to verify if teh heading is dispalyed as expected.
-		 *The heading should be dispalyed as "MY ACCOUNT" */
-		
+		 ***** The assertion here is to verify if the heading is dispalyed as
+		 * expected. The heading should be dispalyed as "MY ACCOUNT"
+		 */
+
 		try {
 			assertEquals(heading, "MY ACCOUNT");
 			logger.log(LogStatus.PASS, "The heading is correctly displayed");
@@ -77,37 +62,36 @@ public class WebTest extends BaseTest {
 			logger.log(LogStatus.FAIL, "The heading is NOT correctly displayed");
 			throw e;
 		}
-		
+
 		/*
-		 *****  The assertion here is to verify 
-		 *if account name for newly created account 
-		 *is dispalyed as expected(as entered during registration(First name + Surname)) ***
+		 ***** The assertion here is to verify if account name for newly created
+		 * account is dispalyed as expected(as entered during registration(First
+		 * name + Surname)) ***
 		 */
-		try{
-		Assert.assertEquals(loggedInUserName,newAccountName);
-		logger.log(LogStatus.PASS, "New ccount name is displayed correctly");
+		try {
+			Assert.assertEquals(loggedInUserName, newAccountName);
+			logger.log(LogStatus.PASS, "New ccount name is displayed correctly");
 		} catch (AssertionError e) {
 			log.info(e.toString());
 			logger.log(LogStatus.FAIL, "New account name and expected account name did not match");
 			throw e;
 		}
-		
+
 		/*
 		 * This step is to verify if Welcome text is dispalyed as expected.
 		 */
-		
-		try{
-//			home.verifyWelcomeText();
-			String welcomeText=home.getWelcomeText();
+
+		try {
+			String welcomeText = home.getWelcomeText();
 			Assert.assertTrue(welcomeText.contains("Welcome to your account."));
 			log.info("Welcome text is  displayed as expected");
 			logger.log(LogStatus.PASS, "Welcome text is displayed as expected");
-			}catch (Exception e) {
-				log.info("Welcome text is not displayed");
-				logger.log(LogStatus.FAIL, "Welcome text is not displayed");
-				log.info(e.toString());
-				throw e;
-			}
+		} catch (AssertionError e) {
+			log.info("Welcome text is not displayed as expected");
+			logger.log(LogStatus.FAIL, "Welcome text is not displayed as expected");
+			log.info(e.toString());
+			throw e;
+		}
 		/*
 		 * This step is to verify if LogOut button is displayed
 		 */
@@ -120,46 +104,40 @@ public class WebTest extends BaseTest {
 			throw e;
 
 		}
-		
-		
+
 		/*
-		 *****  The assertion here is to verify if my account page is correctly displayed. 
-		 *The expected result is: The current url should have "?controller=my-account" text in it ***
+		 ***** The assertion here is to verify if my account page is correctly
+		 * displayed. The expected result is: The current url should have
+		 * "?controller=my-account" text in it ***
 		 */
-		try{
-		home.verifyMyAccountPageIsDisplayed();
-		logger.log(LogStatus.PASS, "My account page(?controller=my-account) is opened ");
+		try {
+			home.verifyMyAccountPageIsDisplayed();
+			logger.log(LogStatus.PASS, "My account page(?controller=my-account) is opened ");
 		} catch (AssertionError e) {
 			log.info(e.toString());
-			logger.log(LogStatus.FAIL, "My account page(?controller=my-account) is NOT correctly opened"+e.toString());
+			logger.log(LogStatus.FAIL,
+					"My account page(?controller=my-account) is NOT correctly opened" + e.toString());
 			throw e;
 		}
-		
-		
-		
-		
-		
-
 	}
 
-	@Test(dataProvider = "getTestData", invocationCount = 20)
-	public void logInTest(Method method, String exist_Email, String exist_Pwd, String email, String pwd, String name,
-			String surName, String fName, String comp, String addr1, String addr2, String City, String post, String oth,
-			String ph, String mob, String alias) throws Exception {
+	 @Test()
+	public void logInTest(Method method) throws Exception {
 		ExtentTest logger = ExtentTestManager.startTest(method.getName(),
 				"Valid Login Scenario with existing username and password.");
-		
+
 		log.info("Starting Login Test");
-		
+
 		logger.log(LogStatus.INFO, "Starting Login Test");
-		
+
 		login = new LoginPage();
 		home = new HomePage();
-//		String actualFullName = null;
-		String heading = login.login(exist_Email, exist_Pwd, logger);
+		// String actualFullName = null;
+		String heading = login.login(data.get("exist_Email"), data.get("exist_Pwd"), logger);
 		/*
-		 *****  The assertion here is to verify if the heading is dispalyed as expected.
-		 *The heading should be dispalyed as "MY ACCOUNT" */
+		 ***** The assertion here is to verify if the heading is dispalyed as
+		 * expected. The heading should be dispalyed as "MY ACCOUNT"
+		 */
 		try {
 			assertEquals(heading, "MY ACCOUNT", "Heading is not as expected");
 		} catch (AssertionError e) {
@@ -168,43 +146,34 @@ public class WebTest extends BaseTest {
 			throw e;
 		}
 		/*
-		 * This assertion is to verify if the logged in user's name is dispalyed as mentioned in the data source(TestData.xlsx)
+		 * This assertion is to verify if the logged in user's name is dispalyed
+		 * as mentioned in the data source(TestData.xlsx)
 		 */
 		try {
-			String actualFullName = home.verifyAccountName(fName);
-			assertEquals(actualFullName, fName);
+			String actualFullName = home.verifyAccountName(data.get("fName"));
+			assertEquals(actualFullName, data.get("fName"));
 		} catch (AssertionError e) {
 			log.info("Expected account name is and actual account name did not match");
 			log.info(e);
 			logger.log(LogStatus.FAIL, e.toString());
 			throw e;
 		}
-//		try {
-//			home.verifyWelcomeText();
-//			log.info("Welcome message is displayed");
-//		} catch (AssertionError e) {
-//			log.info("Displayed text does not contains Welcome To your Account Text");
-//			log.info(e);
-//			logger.log(LogStatus.FAIL, e.toString());
-//			throw e;
-//		}
-		
+
 		/*
-		 * This step is to verify if Welcome text is dispalyed as expected.
+		 * This step is to verify if Welcome text is displayed as expected.
 		 */
-		
-		try{
-//			home.verifyWelcomeText();
-			String welcomeText=home.getWelcomeText();
+
+		try {
+			String welcomeText = home.getWelcomeText();
 			Assert.assertTrue(welcomeText.contains("Welcome to your account."));
 			log.info("Welcome text is  displayed as expected");
 			logger.log(LogStatus.PASS, "Welcome text is displayed as expected");
-			}catch (Exception e) {
-				log.info("Welcome text is not displayed");
-				logger.log(LogStatus.FAIL, "Welcome text is not displayed");
-				log.info(e.toString());
-				throw e;
-			}
+		} catch (AssertionError e) {
+			log.info("Welcome text is not displayed as expected");
+			logger.log(LogStatus.FAIL, "Welcome text is not displayed as expected");
+			log.info(e.toString());
+			throw e;
+		}
 		/*
 		 * This step is to verify if LogOut button is displayed
 		 */
@@ -217,8 +186,9 @@ public class WebTest extends BaseTest {
 			throw e;
 		}
 		/*
-		 *****  The assertion here is to verify if my account page is correctly displayed. 
-		 *The expected result is: The current url should have "?controller=my-account" text in it ***
+		 ***** The assertion here is to verify if my account page is correctly
+		 * displayed. The expected result is: The current url should have
+		 * "?controller=my-account" text in it ***
 		 */
 		try {
 			home.verifyMyAccountPageIsDisplayed();
@@ -230,10 +200,11 @@ public class WebTest extends BaseTest {
 
 	}
 
-	 @Test(dataProvider="getTestData", invocationCount = 20)
-	public void checkoutTest(Method method, String exist_Email, String exist_Pwd, String email, String pwd, String name,
-			String surName, String fName, String comp, String addr1, String addr2, String City, String post, String Oth,
-			String ph, String mob, String alias) throws Exception {
+	/*
+	 * This test is to checkout and place an order for an existing customer
+	 */
+	@Test()
+	public void checkoutTest(Method method) throws Exception {
 
 		ExtentTest logger = ExtentTestManager.startTest(method.getName(), "Order Checkout For existing customer");
 		login = new LoginPage();
@@ -242,11 +213,15 @@ public class WebTest extends BaseTest {
 		checkOut = new CheckoutPage();
 		logger.log(LogStatus.INFO, "Starting Checkout Test");
 		log.info("Starting Checkout Test");
+		/*
+		 * This assertion is to make sure the title is displayed correctly
+		 */
 		try {
-			assertEquals(login.login(exist_Email, exist_Pwd, logger), "MY ACCOUNT",
+			assertEquals(login.login(data.get("exist_Email"), data.get("exist_Pwd"), logger), "MY ACCOUNT",
 					"The expected title did not match with expected title..Expected title is MY ACCOUNT");
 		} catch (AssertionError e) {
 			log.info(e);
+			logger.log(LogStatus.FAIL, e.toString());
 			throw e;
 		}
 		logger.log(LogStatus.INFO, "Clicking on Women section");
@@ -267,36 +242,55 @@ public class WebTest extends BaseTest {
 		checkOut.selectCarrier();
 		logger.log(LogStatus.INFO, "Selecting payment option");
 		checkOut.payByBankWire();
-		String heading = checkOut.confirmOrder( );
+		String heading = checkOut.confirmOrder();
+		/*
+		 * This assertion is to verify the heading is dspalyed as ORDER
+		 * CONFIRMATION
+		 */
 		try {
-			Assert.assertEquals(heading,"ORDER CONFIRMATION");
+			Assert.assertEquals(heading, "ORDER CONFIRMATION");
 		} catch (AssertionError e) {
 			log.info(e);
 			logger.log(LogStatus.FAIL, e.toString());
 			throw e;
 		}
-		// Verify order is confirmed
+		/*
+		 * This step is to verify Current page is the last step of ordering
+		 */
 		logger.log(LogStatus.INFO, "Last step of order");
-		try{
-		order.verifyLastStepOfOrderisDisplayed();
-		}catch(AssertionError e){
-			log.info("Last Step of order has errors"+e.toString());
-	          throw e;
-	       }
+		try {
+			order.verifyLastStepOfOrderisDisplayed();
+		} catch (AssertionError e) {
+			log.info("Last Step of order has errors" + e.toString());
+			throw e;
+		}
+		log.info("Verifying details in order confirmation page");
 		logger.log(LogStatus.INFO, "Order Confirmation Page");
-		try{
-		order.verifyOrderConfirmationPageIsDispalyed();
-		}catch(AssertionError e){
-	          log.info(e);
-	          throw e;
-	       }
-		logger.log(LogStatus.INFO, "Confirmation Message");
-		try{
-		order.orderConfirmationMessageIsDispalyed();
-		}catch(AssertionError e){
-	          log.info(e);
-	          throw e;
-	       }
+		/*
+		 * This step is to verify Order confirmation page is displayed
+		 */
+		try {
+			Assert.assertTrue(order.verifyOrderConfirmationPageIsDispalyed().contains("controller=order-confirmation"),
+					"Confirmation page is not correctly displayed");
+		} catch (AssertionError e) {
+			log.info("Confirmation page URL not contain controller=order-confirmation");
+			logger.log(LogStatus.ERROR, "Confirmation page URL not contain controller=order-confirmation");
+			throw e;
+		}
+		/*
+		 * This step is to verify that order confirmation message is displayed
+		 */
+		log.info("Verifying Confirmation Message");
+		logger.log(LogStatus.INFO, "Verifying Confirmation Message");
+		try {
+			String message = order.orderConfirmationMessageIsDispalyed();
+			Assert.assertTrue(message.contains("Your order on My Store is complete."),
+					"Actual mssg " + message + "does not contain Your order on My Store is completee.");
+		} catch (AssertionError e) {
+			log.info("Dispalyed message does not contain Your order on My Store is completee.");
+			logger.log(LogStatus.ERROR, e.toString());
+			throw e;
+		}
 
 	}
 

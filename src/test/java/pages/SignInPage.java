@@ -1,6 +1,8 @@
 package pages;
 
 import java.util.Date;
+
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import com.hellofresh.challenge.BrowserFactory;
 import com.relevantcodes.extentreports.ExtentTest;
@@ -8,9 +10,12 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import utilities.Utils;
 
+/*
+ * This class has webelements and operations from SignIn page
+ */
 public class SignInPage extends BrowserFactory {
-	
-	By loginButton= By.className("login");
+
+	By loginButton = By.className("login");
 	By registrationEmail = By.id("email_create");
 	By submitCreate = By.id("SubmitCreate");
 	By gender = By.id("id_gender2");
@@ -33,68 +38,77 @@ public class SignInPage extends BrowserFactory {
 	By submitAccount = By.id("submitAccount");
 	By heading = By.cssSelector("h1");
 	String timestamp = String.valueOf(new Date().getTime());
-	By female= By.xpath("//input[contains(@id, 'gender2')]");
-	
-	
+	By female = By.xpath("//input[contains(@id, 'gender2')]");
+
+	Logger log = Logger.getLogger(SignInPage.class);
 	Utils util;
 
-	public String createAccount(String email, String pwd,String fName, String LName,String comp, String adr1, String addr2, String City, String post,String ot, String ph, String mob, String al, ExtentTest logger) throws Exception {
-		email=email+  timestamp + "@hf" + timestamp.substring(7) + ".com";
+	public String createAccount(String email, String pwd, String fName, String LName, String comp, String adr1,
+			String addr2, String City, String post, String ot, String ph, String mob, String al, ExtentTest logger)
+			throws Exception {
+		email = email + timestamp + "@hf" + timestamp.substring(7) + ".com";
 		util = new Utils();
 		util.waitForPageLoad();
 		util.wait_explicit_till_element_Displayed(loginButton);
-		logger.log(LogStatus.PASS,  "Clicking on Login Button");
+		logger.log(LogStatus.PASS, "Clicking on Login Button");
 		util.click(loginButton);
 		util.wait_explicit_till_element_Displayed(registrationEmail);
-		
+
 		util.enterText(registrationEmail, email);
-		logger.log(LogStatus.PASS,  "Entered email id for registrstion");
-		
+		logger.log(LogStatus.PASS, "Entered email id for registrstion");
+
 		util.wait_explicit_till_element_Displayed(submitCreate);
-		
+
 		util.click(submitCreate);
 		util.waitForPageLoad();
-//		logger.log(LogStatus.PASS,  "Registration is done");
-		logger.log(LogStatus.PASS,  "Creating account(Fill up details)");
-		try{
-		
-		util.wait_explicit_till_element_Displayed(firstName);
-		try{
-			util.waitAndClick(female);
-		}catch(Exception e){
-//			Thread.sleep(5000);
-			logger.log(LogStatus.INFO,  "Female catch block");
-//			util.waitAndClick(female);
+		// logger.log(LogStatus.PASS, "Registration is done");
+		logger.log(LogStatus.PASS, "Creating account(Fill up details)");
+		try {
+
+			util.wait_explicit_till_element_Displayed(firstName);
+			try {
+
+				util.wait_explicit_till_element_Displayed(gender);
+				util.click(gender);
+			} catch (Exception e) {
+				log.info("Could not select the title");
+			}
+			/*
+			 * This loop is running 2 times to ensure there is no field left
+			 * blank due to slowness in browser/internet. The second iteration will
+			 * fill in the details if any field was missed during first
+			 * iteration
+			 */
+
+			for (int i = 0; i <=1; i++) {
+				util.enterText(firstName, fName);
+				util.enterText(LastName, LName);
+				util.enterText(password, pwd);
+				util.selectByValue(days, "1");
+				util.selectByValue(months, "1");
+				util.selectByValue(years, "2000");
+				util.enterText(company, comp);
+				util.enterText(address1, adr1);
+				util.enterText(address2, addr2);
+				util.scrollToView(postcode);
+				util.enterText(city, City);
+				util.selectByVisibleText(state, "Colorado");
+				util.enterText(postcode, post);
+				util.enterText(other, ot);
+				util.enterText(phone, ph);
+				util.enterText(phone_Mobile, mob);
+				util.enterText(alias, al);
+			}
+
+			util.click(submitAccount);
+			util.waitForPageLoad();
+			util.wait_explicit_till_element_Displayed(heading);
+			return util.get_Element_Text(heading).toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
 		}
-		util.enterText(firstName, fName);
-		util.enterText(LastName, LName);
-		util.enterText(password, pwd);
-		util.selectByValue(days, "1");
-		util.selectByValue(months, "1");
-		util.selectByValue(years, "2000");
-		util.enterText(company, comp);
-		util.enterText(address1, adr1);
-		util.enterText(address2, addr2);
-		util.scrollToView(postcode);
-		util.enterText(city, City);
-		util.selectByVisibleText(state, "Colorado");
-		util.enterText(postcode, post);
-		util.enterText(other,ot);
-		util.enterText(phone, ph);
-		util.enterText(phone_Mobile, mob);
-		util.enterText(alias, al);
-//		Thread.sleep(5000);
-		util.click(submitAccount);
-		util.waitForPageLoad();
-		util.wait_explicit_till_element_Displayed(heading);
-		return util.get_Element_Text(heading).toString();
-	}catch(Exception e){
-		e.printStackTrace();
-		throw e;
-	}
-		 
 
 	}
-
 
 }

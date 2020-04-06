@@ -36,24 +36,22 @@ public class HomePage extends BaseTest {
 	Utils util = new Utils();
 	Logger log = Logger.getLogger(HomePage.class);
 
-
-
 	public String retrieveUserNameAfterSignIn() {
-		try{
-		String accountName = util.get_Element_Text(account);
-		log.info("Logged in user is ::" + accountName);
-		return accountName;
-		}catch(Exception e){
-			log.error("Error occured while retrieving username"+ e.toString());
+		try {
+			String accountName = util.get_Element_Text(account);
+			log.info("Logged in user is ::" + accountName);
+			return accountName;
+		} catch (Exception e) {
+			log.error("Error occured while retrieving username" + e.toString());
 			throw e;
 		}
 	}
 
 	public void verifyMyAccountPageIsDisplayed() {
-		
+
 		assertTrue(getDriver().getCurrentUrl().contains("controller=my-account"));
 		log.info("Current url contains controller=my-account");
-		
+
 	}
 
 	public void verifyLogOutButtonisDisplayed() {
@@ -64,54 +62,43 @@ public class HomePage extends BaseTest {
 	public String verifyAccountName(String fullName) {
 		String actualFullName = null;
 		actualFullName = util.get_Element_Text(accountHolderName);
-			log.info("Account name is displayed as :: " + actualFullName);
-			return actualFullName;
-//			assertEquals(fullName, actualFullName);
-		
+		log.info("Account name is displayed as :: " + actualFullName);
+		return actualFullName;
+
 	}
 
 	public boolean verifyWelcomeText() {
-		boolean result=util.verify_Element_Text(accountInfo, "Welcome to yourr account.");
+		boolean result = util.verify_Element_Text(accountInfo, "Welcome to yourr account.");
 		return result;
 	}
 
-	public String getWelcomeText(){
+	public String getWelcomeText() {
 		return util.get_Element_Text(accountInfo).trim();
 	}
-//	public void verifyUrlAfterLogin() {
-//		try {
-//			assertTrue(getDriver().getCurrentUrl().contains("controller=my-account"));
-//			log.info("Current url contains controller=my-account");
-//		} catch (AssertionError e) {
-//			log.trace("The current URL is::" + getDriver().getCurrentUrl());
-//			log.trace(e.getStackTrace());
-//		}
-//	}
 
-	public void selectWomenSection()  {
-		try{
-		util.waitAndClick(womenSection);
-		log.info("Selected women section");
-		}catch(TimeoutException e){
+	public void selectWomenSection() {
+		try {
+			util.waitAndClick(womenSection);
+			log.info("Selected women section");
+		} catch (TimeoutException e) {
 			log.info("Women section is not found");
 			log.error(e.getMessage());
 			throw e;
 		}
 
-
 	}
 
 	public void selectProduct() throws Exception {
-		try{
-		util.wait_explicit_till_element_Displayed(tshirt);
-		log.info("Scrolling down to view the product");
-		util.scrollToView(tshirt);
-		log.info("Clicking on the product");
-		util.click(tshirt);
-		log.info("Opening the full view of the product");
-		util.waitAndClick(tshirt);
-		log.info("Selected the product");
-		}catch(TimeoutException e){
+		try {
+			util.wait_explicit_till_element_Displayed(tshirt);
+			log.info("Scrolling down to view the product");
+			util.scrollToView(tshirt);
+			log.info("Clicking on the product");
+			util.click(tshirt);
+			log.info("Opening the full view of the product");
+			util.waitAndClick(tshirt);
+			log.info("Selected the product");
+		} catch (TimeoutException e) {
 			log.info("Could not select the product");
 			log.error(e.getMessage());
 			throw e;
@@ -121,51 +108,41 @@ public class HomePage extends BaseTest {
 
 	public void addToCart() throws InterruptedException {
 		try {
-			try{
-			log.info("Clicking on Add To Cart button");
-			util.waitAndClick(submit);
-			util.waitForPageLoad();
-		} catch (Exception e) {
-			if (util.isElementDispalyed(closeButton)) {
-				util.click(closeButton);
-				log.info("Close button is displayed");
-				util.waitForPageLoad();
-				Thread.sleep(3000);
+			try {
+				log.info("Clicking on Add To Cart button");
 				util.waitAndClick(submit);
-				
+				util.waitForPageLoad();
+			} catch (Exception e) {
+				if (util.isElementDispalyed(closeButton)) {
+					util.click(closeButton);
+					log.info("Close button is displayed");
+					util.waitForPageLoad();
+//					Thread.sleep(3000);
+					util.wait_explicit_till_element_Clickable(submit);
+					util.waitAndClick(submit);
+
+				}
 			}
+		} catch (TimeoutException e) {
+			log.info("Could not add the product to the cart");
+			log.error(e.getMessage());
+			throw e;
 		}
-	}catch(TimeoutException e){
-		log.info("Could not add the product to the cart");
-		log.error(e.getMessage());
-		throw e;
-	}
-		
 
 	}
-	public void proceedToCheckout(){
-		try{
-		log.info("Clicking on Proceed To Checkout button");
-		util.waitAndClick(checkOut);
-		}
-		catch(TimeoutException e){
+
+	public void proceedToCheckout() {
+		try {
+			log.info("Clicking on Proceed To Checkout button");
+			util.waitAndClick(checkOut);
+		} catch (TimeoutException e) {
 			log.info("Error occured during checkout");
 			log.error(e.getMessage());
 			throw e;
 		}
 	}
 
-//	public void acceptTnCAndProceed() {
-//		util.waitAndClick(cgv);
-//		util.waitAndClick(carrier);
-//		log.info("Selected the carrier");
-//	}
-//
-//	public void payByBankWire() {
-//		util.waitAndClick(bankwire);
-//		log.info("Selected the payment method");
-//
-//	}
+
 
 	public String confirmOrder() throws Exception {
 		util.waitAndClick(confirmButton);

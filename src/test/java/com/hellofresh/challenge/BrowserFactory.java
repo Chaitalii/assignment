@@ -13,6 +13,13 @@ public class BrowserFactory {
 	private static BrowserFactory instance = null;
 	protected static ThreadLocal<WebDriver> webDriver = new ThreadLocal<WebDriver>();
 
+	/*
+	 * This class is the browser factory in this framework
+	 * This class maintains the thread safe drivers required for parallel execution 
+	 * and sets the  drivers for browsers for mac and windows.
+	 * 
+	 * */
+	 
 
 	public BrowserFactory() {
 
@@ -43,7 +50,6 @@ public class BrowserFactory {
 				options.addPreference("browser.startup.homepage", "http://automationpractice.com/index.php");
 				options.setAcceptInsecureCerts(true);
 				caps = DesiredCapabilities.firefox();
-				// caps.setCapability([capabilityName], [value]);
 				options.merge(caps);
 				webDriver.set(new FirefoxDriver(options));
 				break;
@@ -64,6 +70,12 @@ public class BrowserFactory {
 				desiredcapabilities.setCapability(SafariOptions.CAPABILITY, safarioptions);
 				webDriver.set(new SafariDriver());
 				break;
+			case "firefox":
+				   System.setProperty("webdriver.gecko.driver", "src/test/resources/mac/geckodriver");
+				   FirefoxOptions options = new FirefoxOptions();
+				   options.addArguments("--start-maximized");
+				   webDriver.set(new FirefoxDriver(options));
+				   break;
 			}
 		}
 	}

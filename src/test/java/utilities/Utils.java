@@ -19,6 +19,8 @@ import static org.testng.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
@@ -27,8 +29,6 @@ public class Utils extends WebTest {
 	Logger log = Logger.getLogger(Utils.class);
 
 	static Xls_Reader reader;
-
-
 
 	public void verifyTitle(String title) {
 		boolean isTitleCorrectlyDisplayed = true;
@@ -102,13 +102,6 @@ public class Utils extends WebTest {
 		}
 	}
 
-	// *******************************************************//
-//	public void sendText(By by, String text) {
-//		WebElement objInput = getDriver().findElement(by);
-//		objInput.sendKeys(text);
-//
-//	}
-
 	public void wait_explicit_till_element_Clickable(WebElement objElement) {
 		WebDriverWait waitnew = new WebDriverWait(getDriver(), 20);
 		waitnew.until(ExpectedConditions.elementToBeClickable(objElement));
@@ -120,7 +113,7 @@ public class Utils extends WebTest {
 		waitnew.until(ExpectedConditions.elementToBeClickable(getDriver().findElement(by)));
 
 	}
-	
+
 	public void selectByValue(By by, String value) {
 		Select select = new Select(getDriver().findElement(by));
 		select.selectByValue(value);
@@ -139,7 +132,7 @@ public class Utils extends WebTest {
 
 	public void wait_explicit_till_element_Displayed(By by) {
 		WebDriverWait waitnew = new WebDriverWait(getDriver(), 20);
-				waitnew.until(ExpectedConditions.visibilityOfElementLocated(by));
+		waitnew.until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
 
 	public void click(By by) {
@@ -153,27 +146,27 @@ public class Utils extends WebTest {
 	}
 
 	public void enterText(By by, String text) {
-		click(by);
-		clearTextBox(by);
-		WebElement objInput = getDriver().findElement(by);
-		objInput.sendKeys(text);
-		getDriver().manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+		try {
+			if (getDriver().findElement(by).getAttribute("value").contains(text)) {
+				// log.info(by + "has value as ::" + text);
+			} else {
+				click(by);
+				clearTextBox(by);
+				WebElement objInput = getDriver().findElement(by);
+				objInput.sendKeys(text);
+				// log.info("Entering value for " + by + " as " + text);
+			}
+		} catch (Exception e) {
+			log.error(e.toString() + " Error occured for element::+" + by + "and text value::" + text);
+			throw e;
+
+		}
 
 	}
-	
-	public void clearTextBox(By by){
+
+	public void clearTextBox(By by) {
 		getDriver().findElement(by).clear();
 	}
-
-//	public void verifyTitleAfterLogin(String actual, String Expected) {
-//		try {
-//			Assert.assertEquals(Expected, actual);
-//			log.trace("Title is as expected");
-//		} catch (AssertionError e) {
-//			log.trace("Title is Not as expected");
-//			log.trace(e.getStackTrace());
-//		}
-//	}
 
 	public void waitAndClick(By by) {
 
@@ -183,8 +176,14 @@ public class Utils extends WebTest {
 
 	}
 
-	public ArrayList<Object[]> getDataFromExcel() {
-		ArrayList<Object[]> myData = new ArrayList<Object[]>();
+	/*
+	 * This method is responsible for fetching data from excel and storing them
+	 * into a map.
+	 * 
+	 */
+	public HashMap<String, String> getDataFromExcel() {
+		ArrayList<String> myData = new ArrayList<String>();
+		HashMap<String, String> data = new HashMap<>();
 		String path = null;
 		try {
 			if (System.getProperty("os.name").toLowerCase().contains("win")) {
@@ -202,40 +201,54 @@ public class Utils extends WebTest {
 
 		for (int rowNum = 2; rowNum <= reader.getRowCount("Test"); rowNum++) {
 			String existingUserEmail = reader.getCellData("Test", "ExistingUserEmail", rowNum);
+			data.put("exist_Email", existingUserEmail);
 			String existingUserPassword = reader.getCellData("Test", "ExistingUserPassword", rowNum);
-			String email = reader.getCellData("Test", "Email", rowNum);
+			data.put("exist_Pwd", existingUserPassword);
+			String email = reader.getCellData("Test", "RegistrationEmail", rowNum);
+			data.put("email", email);
 			String pwd = reader.getCellData("Test", "RegistrationPwd", rowNum);
+			data.put("pwd", pwd);
 			String name = reader.getCellData("Test", "Name", rowNum);
+			data.put("name", name);
 			String surname = reader.getCellData("Test", "SurName", rowNum);
+			data.put("sName", surname);
 			String fullName = reader.getCellData("Test", "FullName", rowNum);
-			String company = reader.getCellData("Test", "Company", rowNum);
+			data.put("fName", fullName);
+			String company = reader.getCellData("Test", "CompanyName", rowNum);
+			data.put("comp", company);
 			String address1 = reader.getCellData("Test", "Address1", rowNum);
+			data.put("addr1", address1);
 			String address2 = reader.getCellData("Test", "Address2", rowNum);
+			data.put("addr2", address2);
 			String city = reader.getCellData("Test", "City", rowNum);
+			data.put("City", city);
 			String postcode = reader.getCellData("Test", "Postcode", rowNum);
+			data.put("post", postcode);
 			String other = reader.getCellData("Test", "Other", rowNum);
+			data.put("oth", other);
 			String phone = reader.getCellData("Test", "Phone", rowNum);
+			data.put("ph", phone);
 			String mobile = reader.getCellData("Test", "Mobile", rowNum);
+			data.put("mob", mobile);
 			String alias = reader.getCellData("Test", "Alias", rowNum);
-			Object ob[] = { existingUserEmail, existingUserPassword, email, pwd, name, surname, fullName, company,
-					address1, address2, city, postcode, other, phone, mobile, alias };
-			myData.add(ob);
+			data.put("alias", alias);
 
 		}
-		return myData;
+		return data;
 	}
 
+	/*
+	 * This method captures fullscreen screenshot of the browser with support
+	 * from Ashot library.
+	 */
 	public void fullScreenCapture(String methodName) throws IOException {
 		Screenshot screenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000))
 				.takeScreenshot(getDriver());
-		// Screenshot screenshot = new
-		// AShot().shootingStrategy(ShootingStrategies.viewportPasting(ShootingStrategies.scaling(1.75f),
-		// 1000)).takeScreenshot(getDriver());
 		ImageIO.write(screenshot.getImage(), "PNG",
 				new File(System.getProperty("user.dir") + "/screenshots/" + methodName + ".png"));
 
 	}
-	
+
 	public void wait_explicit_till_element_invisible(By by) {
 		WebDriverWait waitnew = new WebDriverWait(getDriver(), 20);
 		waitnew.until(ExpectedConditions.invisibilityOf(getDriver().findElement(by)));

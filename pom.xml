@@ -14,7 +14,6 @@
 		<jdk.level>1.8</jdk.level>
 	</properties>
 	<build>
-	<finalName>selenium-test</finalName>
 		<plugins>
 			<!-- Compiler plug-in -->
 			<plugin>
@@ -37,46 +36,14 @@
 					</suiteXmlFiles>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-dependencies</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>
-								${project.build.directory}/libs
-							</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.1.0</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>test-jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+
+
 		</plugins>
 	</build>
 
 	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
+		<!-- <dependency> <groupId>junit</groupId> <artifactId>junit</artifactId> 
+			<version>${junit.version}</version> <scope>test</scope> </dependency> -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
@@ -93,16 +60,17 @@
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<version>7.1.0</version>
-			<scope>test</scope>
+			<scope>compile</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
-
+		<!-- The dependency is for TestNG extent reports features -->
 		<dependency>
 			<groupId>com.relevantcodes</groupId>
 			<artifactId>extentreports</artifactId>
 			<version>2.41.2</version>
 		</dependency>
 		<dependency>
+			<!-- apache jars are required for reading data from excel -->
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>3.9</version>
@@ -128,20 +96,19 @@
 			<version>1.1</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+		<!-- log4j jar is required for logging in console/file -->
 		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
+		<!-- ashot jar is required for capturing fullscreen screenshots -->
 		<!-- https://mvnrepository.com/artifact/ru.yandex.qatools.ashot/ashot -->
 		<dependency>
 			<groupId>ru.yandex.qatools.ashot</groupId>
 			<artifactId>ashot</artifactId>
 			<version>1.5.4</version>
 		</dependency>
-		
-
 	</dependencies>
 </project>
