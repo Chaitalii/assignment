@@ -29,7 +29,7 @@ Note:
 I have placed the safari/chrome drivers for mac inside src/test/resources/mac folder. However, if they do not work, kindly delete theses files and place chrome/safari drivers for mac in the same location.
 
 2. As there was no requirement to run the tests with multiple data set, I have just implemented excel as external data source as we have 1 set of data for testing at this point.
-If required, I can implement DataProvider. Kindly let me know if you want me to implement this in this framework :)
+If required, I can implement DataProvider. Kindly let me know if you want me to implement that in this framework :)
 
 
 
