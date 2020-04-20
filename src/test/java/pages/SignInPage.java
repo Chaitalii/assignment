@@ -46,19 +46,16 @@ public class SignInPage extends BrowserFactory {
 	public String createAccount(String email, String pwd, String fName, String LName, String comp, String adr1,
 			String addr2, String City, String post, String ot, String ph, String mob, String al, ExtentTest logger)
 			throws Exception {
-		email = email + timestamp + "@hf" + timestamp.substring(7) + ".com";
+		email = email + timestamp + "@bp" + timestamp.substring(7) + ".com";
 		util = new Utils();
 		util.waitForPageLoad();
 		util.wait_explicit_till_element_Displayed(loginButton);
 		logger.log(LogStatus.PASS, "Clicking on Login Button");
 		util.click(loginButton);
 		util.wait_explicit_till_element_Displayed(registrationEmail);
-
 		util.enterText(registrationEmail, email);
 		logger.log(LogStatus.PASS, "Entered email id for registrstion");
-
 		util.wait_explicit_till_element_Displayed(submitCreate);
-
 		util.click(submitCreate);
 		util.waitForPageLoad();
 		// logger.log(LogStatus.PASS, "Registration is done");
@@ -75,12 +72,12 @@ public class SignInPage extends BrowserFactory {
 			}
 			/*
 			 * This loop is running 2 times to ensure there is no field left
-			 * blank due to slowness in browser/internet. The second iteration will
-			 * fill in the details if any field was missed during first
+			 * blank due to slowness in browser/internet. The second iteration
+			 * will fill in the details if any field was missed during first
 			 * iteration
 			 */
 
-			for (int i = 0; i <=1; i++) {
+			for (int i = 0; i <= 1; i++) {
 				util.enterText(firstName, fName);
 				util.enterText(LastName, LName);
 				util.enterText(password, pwd);

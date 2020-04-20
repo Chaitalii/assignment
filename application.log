@@ -1,47 +1,28 @@
-2020-04-06 07:01:03,897  INFO [TestNG-test=Test-1] WebTest:215 - Starting Checkout Test
-2020-04-06 07:01:04,418  INFO [TestNG-test=Test-2] WebTest:129 - Starting Login Test
-2020-04-06 07:01:04,437  INFO [TestNG-test=Test-2] Utils:100 - Waiting for page to be loaded fully
-2020-04-06 07:01:04,437  INFO [TestNG-test=Test-2] LoginPage:34 - Waiting for Login button to be available
-2020-04-06 07:01:04,776  INFO [TestNG-test=Test-3] WebTest:45 - Starting SignIn Test
-2020-04-06 07:01:04,792  INFO [TestNG-test=Test-3] Utils:100 - Waiting for page to be loaded fully
-2020-04-06 07:01:05,177  INFO [TestNG-test=Test-1] Utils:100 - Waiting for page to be loaded fully
-2020-04-06 07:01:05,178  INFO [TestNG-test=Test-1] LoginPage:34 - Waiting for Login button to be available
-2020-04-06 07:01:07,040  INFO [TestNG-test=Test-2] LoginPage:38 - Clicked Login button
-2020-04-06 07:01:07,505  INFO [TestNG-test=Test-1] LoginPage:38 - Clicked Login button
-2020-04-06 07:01:07,617  INFO [TestNG-test=Test-1] LoginPage:40 - Entering mail id as ::hf_challenge_123456@hf123456.com
-2020-04-06 07:01:07,800  INFO [TestNG-test=Test-2] LoginPage:40 - Entering mail id as ::hf_challenge_123456@hf123456.com
-2020-04-06 07:01:08,839  INFO [TestNG-test=Test-1] LoginPage:49 - Entering pwd as ::12345678
-2020-04-06 07:01:09,213  INFO [TestNG-test=Test-2] LoginPage:49 - Entering pwd as ::12345678
-2020-04-06 07:01:09,454  INFO [TestNG-test=Test-3] Utils:100 - Waiting for page to be loaded fully
-2020-04-06 07:01:12,003  INFO [TestNG-test=Test-1] Utils:100 - Waiting for page to be loaded fully
-2020-04-06 07:01:12,006  INFO [TestNG-test=Test-1] LoginPage:56 - Clicked submit button
-2020-04-06 07:01:12,152  INFO [TestNG-test=Test-1] Utils:100 - Waiting for page to be loaded fully
-2020-04-06 07:01:12,346  INFO [TestNG-test=Test-2] Utils:100 - Waiting for page to be loaded fully
-2020-04-06 07:01:12,347  INFO [TestNG-test=Test-2] LoginPage:56 - Clicked submit button
-2020-04-06 07:01:12,485  INFO [TestNG-test=Test-2] Utils:100 - Waiting for page to be loaded fully
-2020-04-06 07:01:12,670  INFO [TestNG-test=Test-2] HomePage:65 - Account name is displayed as :: Joe Black
-2020-04-06 07:01:12,763  INFO [TestNG-test=Test-2] WebTest:169 - Welcome text is  displayed as expected
-2020-04-06 07:01:12,874  INFO [TestNG-test=Test-2] HomePage:59 - Logout button is dispalyed
-2020-04-06 07:01:12,882  INFO [TestNG-test=Test-2] HomePage:53 - Current url contains controller=my-account
-2020-04-06 07:01:14,581  INFO [TestNG-test=Test-1] HomePage:82 - Selected women section
-2020-04-06 07:01:14,672  INFO [TestNG-test=Test-1] HomePage:94 - Scrolling down to view the product
-2020-04-06 07:01:14,704  INFO [TestNG-test=Test-1] HomePage:96 - Clicking on the product
-2020-04-06 07:01:14,869  INFO [TestNG-test=Test-1] HomePage:98 - Opening the full view of the product
-2020-04-06 07:01:16,397  INFO [TestNG-test=Test-1] HomePage:100 - Selected the product
-2020-04-06 07:01:16,398  INFO [TestNG-test=Test-1] HomePage:112 - Clicking on Add To Cart button
-2020-04-06 07:01:16,646  INFO [TestNG-test=Test-1] Utils:100 - Waiting for page to be loaded fully
-2020-04-06 07:01:16,646  INFO [TestNG-test=Test-1] HomePage:136 - Clicking on Proceed To Checkout button
-2020-04-06 07:01:18,281  INFO [TestNG-test=Test-3] Utils:100 - Waiting for page to be loaded fully
-2020-04-06 07:01:18,515  INFO [TestNG-test=Test-3] HomePage:42 - Logged in user is ::Test User
-2020-04-06 07:01:18,555  INFO [TestNG-test=Test-3] WebTest:87 - Welcome text is  displayed as expected
-2020-04-06 07:01:18,632  INFO [TestNG-test=Test-3] HomePage:59 - Logout button is dispalyed
-2020-04-06 07:01:18,639  INFO [TestNG-test=Test-3] HomePage:53 - Current url contains controller=my-account
-2020-04-06 07:01:19,917  INFO [TestNG-test=Test-1] CheckoutPage:33 - Verifying the details of the order
-2020-04-06 07:01:21,147  INFO [TestNG-test=Test-1] CheckoutPage:44 - Clicking on Proceed after verifying delivery and billing addresses
-2020-04-06 07:01:22,260  INFO [TestNG-test=Test-1] CheckoutPage:56 - Accepted terms and conditions
-2020-04-06 07:01:23,211  INFO [TestNG-test=Test-1] CheckoutPage:67 - Clicking on Proceed after selecting my carrier
-2020-04-06 07:01:24,492  INFO [TestNG-test=Test-1] CheckoutPage:73 - Selected the payment method
-2020-04-06 07:01:26,423  INFO [TestNG-test=Test-1] CheckoutPage:85 - After order confirmation, dispalyed header is ::ORDER CONFIRMATION
-2020-04-06 07:01:26,442  INFO [TestNG-test=Test-1] OrderConfirmationPage:34 - Verifying Last step of order is displayed
-2020-04-06 07:01:26,610  INFO [TestNG-test=Test-1] WebTest:267 - Verifying details in order confirmation page
-2020-04-06 07:01:26,616  INFO [TestNG-test=Test-1] WebTest:283 - Verifying Confirmation Message
+2020-04-20 20:08:37,997  INFO [TestNG-test=Test-1] WebTest:70 - Starting SignIn Test
+2020-04-20 20:08:38,051  INFO [TestNG-test=Test-2] WebTest:46 - Executing test
+
+2020-04-20 20:08:38,052  INFO [TestNG-test=Test-2] WebTest:48 - 
+login mail::hf_challenge_123456@hf123456.com 
+loginpwd::12345678 
+email::hf_challenge_ 
+pwd::Qwerty 
+NAme ::Test 
+surname::User 
+fullname::Joe Black 
+company ::Company 
+addr1::Qwerty, 123 
+addr2::address2 
+city::Qwerty 
+postcode::12345 
+other::Qwerty 
+phone::12345123123 
+mobile::12345123123 
+alias::hf
+2020-04-20 20:08:38,188  INFO [TestNG-test=Test-1] Utils:121 - Waiting for page to be loaded fully
+2020-04-20 20:08:41,447  INFO [TestNG-test=Test-1] Utils:121 - Waiting for page to be loaded fully
+2020-04-20 20:09:03,389  INFO [TestNG-test=Test-1] SignInPage:71 - Could not select the title
+2020-04-20 20:09:08,878  INFO [TestNG-test=Test-1] Utils:121 - Waiting for page to be loaded fully
+2020-04-20 20:09:08,995  INFO [TestNG-test=Test-1] HomePage:42 - Logged in user is ::Test User
+2020-04-20 20:09:09,030  INFO [TestNG-test=Test-1] WebTest:114 - Welcome text is  displayed as expected
+2020-04-20 20:09:09,099  INFO [TestNG-test=Test-1] HomePage:59 - Logout button is dispalyed
+2020-04-20 20:09:09,104  INFO [TestNG-test=Test-1] HomePage:53 - Current url contains controller=my-account

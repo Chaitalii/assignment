@@ -1,6 +1,11 @@
 package utilities;
 
 import org.apache.log4j.Logger;
+
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -17,6 +22,8 @@ import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 import static org.testng.Assert.assertTrue;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +36,9 @@ public class Utils extends WebTest {
 	Logger log = Logger.getLogger(Utils.class);
 
 	static Xls_Reader reader;
+	static Workbook book;
+	static Sheet sheet;
+	
 
 	public void verifyTitle(String title) {
 		boolean isTitleCorrectlyDisplayed = true;
@@ -61,6 +71,10 @@ public class Utils extends WebTest {
 		return getDriver().findElement(by).isDisplayed();
 
 	}
+	public void click(By by) {
+		getDriver().findElement(by).click();
+
+	}
 
 	public String get_Element_Text(By by) {
 		try {
@@ -71,6 +85,13 @@ public class Utils extends WebTest {
 		}
 
 	}
+	void checkText(By selector, String text, int timeout) {
+        WebDriverWait waitList = new WebDriverWait(getDriver(), timeout);
+        waitList.until(ExpectedConditions.elementToBeClickable(selector));
+        WebElement fetchText = getDriver().findElement(selector);
+        fetchText.getText();
+        Assert.assertTrue(fetchText.getText().contains(text));
+    }
 
 	public boolean verify_Element_Text(By by, String text) {
 		String strActual = getDriver().findElement(by).getText().trim();
@@ -135,11 +156,7 @@ public class Utils extends WebTest {
 		waitnew.until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
 
-	public void click(By by) {
-		getDriver().findElement(by).click();
-
-	}
-
+	
 	public void scrollToView(By by) {
 		JavascriptExecutor js = (JavascriptExecutor) getDriver();
 		js.executeScript("arguments[0].scrollIntoView(true);", getDriver().findElement(by));
@@ -254,5 +271,39 @@ public class Utils extends WebTest {
 		waitnew.until(ExpectedConditions.invisibilityOf(getDriver().findElement(by)));
 
 	}
+	
+	public Object[][] getData(String sheetName){
+		FileInputStream file=null;
+		
+		try{
+			file= new FileInputStream(System.getProperty("user.dir") + "\\TestData.xlsx");
+			
+		}catch(FileNotFoundException e){
+			e.printStackTrace();
+			
+		}
+		try{
+		book= WorkbookFactory.create(file);
+		}catch(InvalidFormatException e){
+			e.printStackTrace();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sheet= book.getSheet(sheetName);
+		Object[][] data= new Object[sheet.getLastRowNum()][sheet.getRow(0).getLastCellNum()];
+		for(int i=0; i<sheet.getLastRowNum(); i++){
+			for(int k=0; k<sheet.getRow(0).getLastCellNum(); k++){
+				data[i][k]=sheet.getRow(i+1).getCell(k).toString();
+//				System.out.print(data[i][k]);
+//				System.out.println();
+			}
+		}
+		return data;
+				
+			}
+		
+	}
 
-}
+

@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 //import org.apache.logging.log4j.LogManager;
 //import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
@@ -14,6 +16,7 @@ import pages.HomePage;
 import pages.LoginPage;
 import pages.OrderConfirmationPage;
 import pages.SignInPage;
+import utilities.Utils;
 import utilities.ExtentReports.ExtentTestManager;
 
 /*
@@ -29,6 +32,26 @@ public class WebTest extends BaseTest {
 	OrderConfirmationPage order;
 	CheckoutPage checkOut;
 
+	@DataProvider
+	public Object[][] getTestData() {
+		Utils util = new Utils();
+		Object data[][] = util.getData("Test");
+		return data;
+	}
+
+	@Test(dataProvider = "getTestData")
+	public void test(Method method, String loginMail, String loginPwd, String regEmail, String regPwd, String name,
+			String surName, String fullName, String company, String address1, String address2, String city,
+			String postCode, String other, String phone, String mobile, String alias) throws Exception {
+		log.info("Executing test\n");
+
+		log.info("\nlogin mail::" + loginMail + " \nloginpwd::" + loginPwd + " \nemail::" + regEmail + " \npwd::"
+				+ regPwd + " \nNAme ::" + name + " \nsurname::" + surName + " \nfullname::" + fullName + " \ncompany ::" + company
+				+ " \naddr1::" + address1 + " \naddr2::" + address2 + " \ncity::" + city + " \npostcode::" + postCode + " \nother::"
+				+ other + " \nphone::" + phone + " \nmobile::" + mobile + " \nalias::" + alias);
+
+	}
+
 	/*
 	 * This test case is for verifying the signin process for a new user. The
 	 * data required for creating new user is passed externally from excel file.
@@ -37,17 +60,21 @@ public class WebTest extends BaseTest {
 	 * 
 	 */
 
-	@Test()
-	public void signInTest(Method method) throws Exception {
+	@Test(dataProvider = "getTestData")
+	public void signInTest(Method method, String loginMail, String loginPwd, String regEmail, String regPwd, String name,
+			String surName, String fullName, String company, String address1, String address2, String city,
+			String postCode, String other, String phone, String mobile, String alias) throws Exception {
 		ExtentTest logger = ExtentTestManager.startTest(method.getName(), "Create new User");
 		signIn = new SignInPage();
 		home = new HomePage();
 		log.info("Starting SignIn Test");
 		logger.log(LogStatus.INFO, "Starting SignIn Test");
-		String heading = signIn.createAccount(data.get("email"), data.get("pwd"), data.get("name"), data.get("sName"), data.get("comp"), data.get("addr1"), 
-				data.get("addr2"), data.get("City"), data.get("post"), data.get("post"), data.get("post"), data.get("mob"), data.get("alias"), logger);
+		String heading = signIn.createAccount(regEmail, regPwd, name, surName,
+				company, address1, address2, city, postCode,
+				other, phone, mobile, alias, logger);
 		String loggedInUserName = home.retrieveUserNameAfterSignIn();
-		String newAccountName = data.get("name") + " " + data.get("sName");
+//		String newAccountName = data.get("name") + " " + data.get("sName");
+		String newAccountName=name+ " "+surName;
 
 		/*
 		 ***** The assertion here is to verify if the heading is dispalyed as
@@ -121,7 +148,7 @@ public class WebTest extends BaseTest {
 		}
 	}
 
-	 @Test()
+	// @Test
 	public void logInTest(Method method) throws Exception {
 		ExtentTest logger = ExtentTestManager.startTest(method.getName(),
 				"Valid Login Scenario with existing username and password.");
@@ -203,7 +230,7 @@ public class WebTest extends BaseTest {
 	/*
 	 * This test is to checkout and place an order for an existing customer
 	 */
-	@Test()
+	// @Test
 	public void checkoutTest(Method method) throws Exception {
 
 		ExtentTest logger = ExtentTestManager.startTest(method.getName(), "Order Checkout For existing customer");

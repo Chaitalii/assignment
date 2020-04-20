@@ -11,6 +11,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 
 import utilities.Utils;
@@ -24,7 +25,7 @@ String homePageUrl="http://automationpractice.com/index.php";
 public HashMap<String, String> data = new HashMap<>();
 
 
-@BeforeSuite
+//@BeforeSuite
 public void disableFreeMaker(){
 //	This is just to disable freemaker logging
 	System.setProperty("org.freemarker.loggerLibrary", "none");
@@ -32,6 +33,8 @@ public void disableFreeMaker(){
 	data = util.getDataFromExcel();
 }
   
+
+
     @BeforeMethod
     @Parameters("browser")
     public void setUp(String browser) throws Exception {
