@@ -148,8 +148,10 @@ public class WebTest extends BaseTest {
 		}
 	}
 
-	 @Test
-	public void logInTest(Method method) throws Exception {
+	@Test(dataProvider = "getTestData")
+	public void logInTest(Method method, String loginMail, String loginPwd, String regEmail, String regPwd, String name,
+			String surName, String fullName, String company, String address1, String address2, String city,
+			String postCode, String other, String phone, String mobile, String alias) throws Exception {
 		ExtentTest logger = ExtentTestManager.startTest(method.getName(),
 				"Valid Login Scenario with existing username and password.");
 
@@ -160,7 +162,8 @@ public class WebTest extends BaseTest {
 		login = new LoginPage();
 		home = new HomePage();
 		// String actualFullName = null;
-		String heading = login.login(data.get("exist_Email"), data.get("exist_Pwd"), logger);
+//		String heading = login.login(data.get("exist_Email"), data.get("exist_Pwd"), logger);
+		String heading = login.login(loginMail, loginPwd,logger);
 		/*
 		 ***** The assertion here is to verify if the heading is dispalyed as
 		 * expected. The heading should be dispalyed as "MY ACCOUNT"
@@ -177,8 +180,8 @@ public class WebTest extends BaseTest {
 		 * as mentioned in the data source(TestData.xlsx)
 		 */
 		try {
-			String actualFullName = home.verifyAccountName(data.get("fName"));
-			assertEquals(actualFullName, data.get("fName"));
+			String actualFullName = home.verifyAccountName(fullName);
+			assertEquals(actualFullName, fullName);
 		} catch (AssertionError e) {
 			log.info("Expected account name is and actual account name did not match");
 			log.info(e);
@@ -230,8 +233,10 @@ public class WebTest extends BaseTest {
 	/*
 	 * This test is to checkout and place an order for an existing customer
 	 */
-	 @Test
-	public void checkoutTest(Method method) throws Exception {
+	@Test(dataProvider = "getTestData")
+	public void checkoutTest(Method method,String loginMail, String loginPwd, String regEmail, String regPwd, String name,
+			String surName, String fullName, String company, String address1, String address2, String city,
+			String postCode, String other, String phone, String mobile, String alias) throws Exception {
 
 		ExtentTest logger = ExtentTestManager.startTest(method.getName(), "Order Checkout For existing customer");
 		login = new LoginPage();
@@ -244,8 +249,13 @@ public class WebTest extends BaseTest {
 		 * This assertion is to make sure the title is displayed correctly
 		 */
 		try {
-			assertEquals(login.login(data.get("exist_Email"), data.get("exist_Pwd"), logger), "MY ACCOUNT",
+//			assertEquals(login.login(data.get("exist_Email"), data.get("exist_Pwd"), logger), "MY ACCOUNT",
+//					"The expected title did not match with expected title..Expected title is MY ACCOUNT");
+			
+			assertEquals(login.login(loginMail, loginPwd, logger), "MY ACCOUNT",
 					"The expected title did not match with expected title..Expected title is MY ACCOUNT");
+			
+			
 		} catch (AssertionError e) {
 			log.info(e);
 			logger.log(LogStatus.FAIL, e.toString());
