@@ -25,12 +25,12 @@ String homePageUrl="http://automationpractice.com/index.php";
 public HashMap<String, String> data = new HashMap<>();
 
 
-//@BeforeSuite
+@BeforeSuite
 public void disableFreeMaker(){
 //	This is just to disable freemaker logging
 	System.setProperty("org.freemarker.loggerLibrary", "none");
-	Utils util=new Utils();
-	data = util.getDataFromExcel();
+//	Utils util=new Utils();
+//	data = util.getDataFromExcel();
 }
   
 
