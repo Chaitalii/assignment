@@ -11,4 +11,4 @@ do
 done
 
 # start the java command
-java -cp web-test-1.0-SNAPSHOT-tests.jar:web-test-1.0-SNAPSHOT.jar:libs/* -DHUB_HOST=$HUB_HOST  org.testng.TestNG testng.xml
+java -cp web-test-1.0-SNAPSHOT-tests.jar:web-test-1.0-SNAPSHOT.jar:libs/* -DHUB_HOST=$HUB_HOST -DBROWSER=$BROWSER  org.testng.TestNG testng.xml
