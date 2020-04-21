@@ -280,7 +280,8 @@ public class Utils extends WebTest {
 			if (System.getProperty("os.name").toLowerCase().contains("win")) {
 				file = new FileInputStream(System.getProperty("user.dir") + "\\TestData.xlsx");
 
-			} else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+//			} else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+			}else{
 
 				file = new FileInputStream(System.getProperty("user.dir") + "/TestData.xlsx");
 
