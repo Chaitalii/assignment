@@ -15,7 +15,8 @@ public class ExtentManager {
             if (System.getProperty("os.name").toLowerCase().contains("win")) {
                 extent = new ExtentReports(workingDir + "\\ExtentReports\\ExtentReportResults.html", true);
             }
-            else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+//            else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+            else{
                 extent = new ExtentReports(workingDir + "/ExtentReports/ExtentReportResults.html", true);
             }
         }
