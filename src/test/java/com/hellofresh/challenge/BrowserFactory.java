@@ -40,6 +40,8 @@ public class BrowserFactory {
 	public final void setDriver(String browser) throws Exception {
 		DesiredCapabilities caps = null;
 		String browserName;
+		boolean docker=false;
+		String host=null;
 
 		if (System.getProperty("BROWSER") != null && System.getProperty("BROWSER").equalsIgnoreCase("firefox")) {
 			caps = DesiredCapabilities.firefox();
@@ -48,8 +50,13 @@ public class BrowserFactory {
 			caps = DesiredCapabilities.chrome();
 			browserName = "chrome";
 		}
+		if(docker){
 		if (System.getProperty("HUB_HOST") != null) {
-			String host = System.getProperty("HUB_HOST");
+			 host = System.getProperty("HUB_HOST");
+			
+		}else{
+			host="localhost";
+		}
 			host = "http://" + host + ":4444/wd/hub";
 			System.out.println("The complete url is ::" + host);
 			try {
@@ -57,7 +64,10 @@ public class BrowserFactory {
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			}
-		} else {
+		} 
+		
+
+		else {
 			if (System.getProperty("os.name").toLowerCase().contains("win")) {
 				switch (browser) {
 
