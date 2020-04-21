@@ -40,7 +40,7 @@ public class BrowserFactory {
 	public final void setDriver(String browser) throws Exception {
 		DesiredCapabilities caps = null;
 		String browserName;
-		boolean docker=false;
+		boolean docker=true;
 		String host=null;
 
 		if (System.getProperty("BROWSER") != null && System.getProperty("BROWSER").equalsIgnoreCase("firefox")) {
