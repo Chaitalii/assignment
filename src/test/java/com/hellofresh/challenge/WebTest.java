@@ -39,7 +39,7 @@ public class WebTest extends BaseTest {
 		return data;
 	}
 
-	@Test(dataProvider = "getTestData")
+//	@Test(dataProvider = "getTestData")
 	public void test(Method method, String loginMail, String loginPwd, String regEmail, String regPwd, String name,
 			String surName, String fullName, String company, String address1, String address2, String city,
 			String postCode, String other, String phone, String mobile, String alias) throws Exception {
@@ -148,7 +148,7 @@ public class WebTest extends BaseTest {
 		}
 	}
 
-	// @Test
+	 @Test
 	public void logInTest(Method method) throws Exception {
 		ExtentTest logger = ExtentTestManager.startTest(method.getName(),
 				"Valid Login Scenario with existing username and password.");
@@ -230,7 +230,7 @@ public class WebTest extends BaseTest {
 	/*
 	 * This test is to checkout and place an order for an existing customer
 	 */
-	// @Test
+	 @Test
 	public void checkoutTest(Method method) throws Exception {
 
 		ExtentTest logger = ExtentTestManager.startTest(method.getName(), "Order Checkout For existing customer");

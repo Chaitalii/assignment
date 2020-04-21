@@ -64,12 +64,12 @@ public class TestListener extends WebTest implements ITestListener {
 		// ExtentReports log and screenshot operations for failed tests.
 		ExtentTestManager.getTest().log(LogStatus.FAIL, "Test Failed",
 				ExtentTestManager.getTest().addBase64ScreenShot(base64Screenshot));
-//		try {
-//			util.fullScreenCapture(iTestResult.getMethod().getMethodName());
-//		} catch (IOException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
+		try {
+			util.fullScreenCapture(iTestResult.getMethod().getMethodName());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 //		try {
 //			util.fullScreenCapture(iTestResult.getMethod().getMethodName());
 //		} catch (IOException e) {
