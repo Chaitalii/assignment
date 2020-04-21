@@ -20,7 +20,7 @@ services:
       - hub
     environment:
       - HUB_HOST=hub
-  tests:
+  test1:
     image: chaitali2019/autoprac
     depends_on: 
       - chrome
@@ -28,6 +28,14 @@ services:
     environment:
       - HUB_HOST=hub
       - BROWSER=firefox
+  test2:
+    image: chaitali2019/autoprac
+    depends_on:
+      - chrome
+      - firefox
+    environment:
+      - HUB_HOST=hub
+      - BROWSER=chrome
 
                          
 

@@ -8,3 +8,7 @@ docker run -e HUB_HOST="35.198.140.13" chaitali2019/autoprac:latest
 
 To find specific logs:
 docker-compose up | grep -e 'test'
+Scaling up multiple services
+ocker-compose up --scale chrome=3 --scale firefox=3
+to remove stopped containers + none images
+docker system prune -f
