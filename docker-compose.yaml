@@ -20,7 +20,7 @@ services:
       - hub
     environment:
       - HUB_HOST=hub
-  automation:
+  tests:
     image: chaitali2019/autoprac
     depends_on: 
       - chrome

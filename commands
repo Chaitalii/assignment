@@ -5,3 +5,6 @@ java -cp web-test-1.0-SNAPSHOT-tests.jar:web-test-1.0-SNAPSHOT.jar:libs/* -DHUB_
 
 Run docker image with environment variable
 docker run -e HUB_HOST="35.198.140.13" chaitali2019/autoprac:latest
+
+To find specific logs:
+docker-compose up | grep -e 'test'
