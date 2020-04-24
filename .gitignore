@@ -2,4 +2,4 @@
 /ExtentReports
 /test-output/
 application.log
-/jenkins/
+/jenkins/*
